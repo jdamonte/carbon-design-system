@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS GRID Justification And Alignment</title>
+    <style>
+        body {
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            height: 100vh;
+        }
+        
+        .container {
+            display: grid;
+            border: 1px dashed rebeccapurple;
+            height: 250px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto;
+            background: rgba(114, 186, 94, 0.05);
+            grid-gap: 8px;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        .item {
+            width: 200px;
+            height: 50%;
+            background: rgba(255, 213, 70, 0.4);
+            border: 2px dashed rgba(236, 198, 48, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+</body>
+
+</html>

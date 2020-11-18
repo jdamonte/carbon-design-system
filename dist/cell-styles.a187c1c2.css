@@ -1,0 +1,27 @@
+/* Use following styles on ag-Grid Cells */
+
+.rag-red {
+    background-color: #E12D33;
+}
+
+.rag-green {
+    background-color: #E0EDDC;
+}
+
+.rag-amber {
+    background-color: #FFF4D6;
+}
+
+.rag-red-outer .rag-element {
+    background-color: #C01B21;
+}
+
+.rag-green-outer .rag-element {
+    background-color: #92C83E;
+}
+
+.rag-amber-outer .rag-element {
+    background-color: #D7E7BD;
+}
+
+/*# sourceMappingURL=/cell-styles.a187c1c2.css.map */

@@ -1,0 +1,214 @@
+@import 'ul-theme';
+@include ul-theme();
+@import '/node_modules/carbon-components/scss/globals/scss/styles.scss';
+@import 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap';
+
+/* these are the custom overrides to make it match with UL design system*/
+
+
+/* UL COLOR OVERRIDES */
+
+
+/* Change Font Styles to Open Sans */
+
+$ul-font-family:'Open Sans',
+sans-serif;
+
+/* Header Background Color */
+
+.bx--header {
+    background-color: $blue-60;
+    color: #fff;
+}
+
+.bx--header__menu-item,
+.bx--header__menu-title {
+    color: #fff;
+    background-color: $blue-60;
+}
+
+a.bx--header__menu-item:hover {
+    color: $shell-header-text-01;
+    background-color: $blue-60;
+}
+
+.bx--header__action:active,
+a.bx--header__menu-item:active {
+    color: $shell-header-text-01;
+    background-color: $blue-60;
+}
+
+a.bx--header__menu-item:focus {
+    color: #fff;
+    border-color: $shell-header-focus;
+    outline: none;
+}
+
+a.bx--header__menu-item {
+    color: #fff;
+}
+
+a.bx--header__menu-item:hover {
+    color: #fff;
+    background-color: $blue-70;
+}
+
+a.bx--header__menu-item:active {
+    color: #fff;
+    background-color: $blue-60;
+}
+
+a.bx--header__menu-item:focus {
+    color: #fff;
+}
+
+.bx--header__action:hover {
+    background-color: $blue-70;
+}
+
+.bx--header__action:active {
+    background-color: $blue-70;
+}
+
+.bx--header__action:active {
+    color: #fff;
+    background-color: $blue-70;
+}
+
+.bx--header__menu-title[aria-expanded=true] {
+    z-index: 8001;
+    color: #ffffff;
+    background-color: $blue-70;
+}
+
+.bx--header__menu .bx--header__menu-item:hover {
+    color: #fff;
+    background-color: $blue-70 !important;
+}
+
+a.bx--header__menu-item:hover {
+    color: #fff;
+    background-color: $blue-70 !important;
+}
+
+a.bx--header__menu-item:active {
+    color: #f4f4f4;
+    background-color: $blue-60;
+}
+
+.bx--header__menu .bx--header__menu-item:hover {
+    color: #fff;
+    background-color: $blue-70 !important;
+}
+
+
+/* Button Colors */
+
+$hover-primary: #003357;
+$active-primary: #001524;
+.bx--btn--primary {
+    background-color: $blue-60;
+    font-family: $ul-font-family;
+    &:hover {
+        background-color: $hover-primary;
+    }
+    &:focus {
+        background-color: $active-primary;
+    }
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    font-family: $ul-font-family;
+}
+
+p {
+    @include carbon--type-style('body-long-02');
+}
+
+a {
+    color: #0062ff;
+}
+
+em {
+    font-style: italic;
+}

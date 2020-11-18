@@ -1,0 +1,139 @@
+    /* This file contains custom styles */
+    /*Change Default Font to Arial*/
+    
+    body {
+        font-family: Arial, Helvetica, sans-serif, monospace;
+    }
+    /*Add extra width to the defaul notification box*/
+    
+    .bx--inline-notification {
+        max-width: 100%;
+        margin-top: 0.5rem;
+        margin-bottom: 0rem;
+    }
+    /* Adjust the spacing for the top Notification message*/
+    /*KPI styles*/
+    
+    h1.numberofhours {
+        color: #01687B;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-weight: 100;
+    }
+    
+    .kpi-subhead-title {
+        font-size: 0.88rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: gray;
+    }
+    
+    h1.numberofcompleted {
+        color: #146600;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-weight: 100;
+    }
+    
+    h1.numberofremain {
+        color: #FFA700;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-weight: 100;
+    }
+    
+    .bx--tile {
+        background-color: #fff;
+    }
+    
+    .kpirow {
+        background-color: #fff;
+        margin: 0.5rem 0 0 0;
+        padding: 0.5rem;
+    }
+    
+    .kpi-info {
+        font-size: 0.875rem;
+        color: #00518A;
+    }
+    
+    .kpi-decrease {
+        font-size: 0.875rem;
+        color: #C02032;
+    }
+    
+    .kpi-increase {
+        font-size: 0.875rem;
+        color: #92C83E;
+    }
+    /*Remove unnecessary padding in main grids and change bg*/
+    
+    .bx--grid {
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+        background-color: #f4f4f4;
+    }
+    /* Add a box shadow to the left panel */
+    
+    .shadow {
+        border-right: 1px solid lightgray
+    }
+    /* Override the Left Menu Rail Margin */
+    
+    a.bx--side-nav__link {
+        padding-left: 1rem;
+    }
+    /* Override the Carbon Table Styles */
+    
+    .bx--data-table td {
+        background-color: #fff;
+        border: 1px solid #f4f4f4;
+    }
+    
+    .bx--data-table th,
+    .bx--data-table td {
+        padding: 0.15rem;
+        font-size: 0.875rem;
+    }
+    
+    .td-bold {
+        font-weight: 700;
+    }
+    /* Flexbox classes for the KPI data*/
+    /*  .flexbox-container {
+        display: flex;
+        padding: 0rem;
+    }
+    
+    .flexbox-item {
+        padding: 0.25rem;
+        margin-left: 0.5rem;
+        white-space: nowrap;
+    }
+    
+    .flexbox-item-1 {
+        align-self: center;
+        white-space: nowrap;
+    } */
+    /* Change the Content Switchers */
+    
+    .bx--content-switcher-btn.bx--content-switcher--selected {
+        background-color: #00518A;
+        color: #ffffff;
+        z-index: 3;
+        border-left: 2px solid #0A99FF;
+    }
+    
+    .bx--content-switcher-btn:first-child {
+        border-top-left-radius: 0rem;
+        border-bottom-left-radius: 0rem;
+    }
+    
+    .bx--content-switcher-btn:last-child {
+        border-top-right-radius: 0rem;
+        border-bottom-right-radius: 0rem;
+    }
+    
+    .bx--content-switcher {
+        height: 2rem;
+        margin-top: 0.5rem;
+    }
+
+/*# sourceMappingURL=/custom.d5cc83c2.css.map */

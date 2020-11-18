@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Grid Template Layout</title>
+    <style>
+        body {
+            display: grid;
+            height: 100vh;
+            /*  grid-template-rows: 10em 50vh auto 10em;
+            grid-template-columns: 1fr 5fr 2fr 1fr;
+            
+            grid-template-areas: "header header header header" 
+            "hero hero hero hero" ". main sidebar ." "footer footer footer footer"; */
+            grid-template: "header header header header" 5em/* row 1 */
+            "hero hero hero hero" 20vh/* row 2 */
+            ". main sidebar ." auto/* row 3 */
+            "footer footer footer footer " 10em/* footer */
+            / 0px minmax(150px, 5fr) 2fr 0px;
+            /* Define columns */
+        }
+        
+        header {
+            grid-area: header;
+            background-color: burlywood;
+        }
+        
+        .hero {
+            grid-area: hero;
+            background-color: coral;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        main {
+            grid-area: main;
+            background-color: crimson;
+        }
+        
+        .sidebar {
+            grid-area: sidebar;
+            background-color: cyan;
+        }
+        
+        footer {
+            grid-area: footer;
+            background-color: darkcyan;
+        }
+        
+        .card {
+            display: grid;
+            grid-template: "img title" min-content "img content" auto / 1fr 3fr;
+            max-width: 300px;
+            margin: auto;
+            background-color: darkolivegreen;
+            border: 1px dashed purple;
+            padding: 0.25rem;
+        }
+        
+        .card-img {
+            grid-area: img;
+            background-color: hotpink;
+        }
+        
+        .card-title {
+            background-color: indigo;
+            grid-area: title;
+        }
+        
+        .card-content {
+            background-color: khaki;
+            grid-area: content
+        }
+    </style>
+</head>
+
+<body>
+    <header>test</header>
+    <section class="hero">
+        <h1>Test</h1>
+        <h2>Two</h2>
+    </section>
+    <main>
+        <article class="card">
+            <div class="card-img">img</div>
+            <div class="card-title">
+                <h4>Card title</h4>
+            </div>
+            <div class="card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam nesciunt voluptatem tempora. Numquam modi consequuntur dicta quo unde? Aliquid nisi suscipit repellat aut dolore obcaecati in neque sequi dolor voluptatem.</div>
+        </article>
+        <article class="card">
+            <div class="card-img">img</div>
+            <div class="card-title">
+                <h4>Card title</h4>
+            </div>
+            <div class="card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam nesciunt voluptatem tempora. Numquam modi consequuntur dicta quo unde? Aliquid nisi suscipit repellat aut dolore obcaecati in neque sequi dolor voluptatem.</div>
+        </article>
+
+    </main>
+    <div class="sidebar">test</div>
+    <footer>The footer</footer>
+
+</body>
+
+</html>

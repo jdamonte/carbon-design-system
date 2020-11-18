@@ -1,0 +1,130 @@
+body {
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+
+/* Set the defaul box sizing to border-box */
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*after {
+    box-sizing: inherit;
+}
+
+
+/* Remove the Labware iframe border */
+
+iframe {
+    border: none;
+}
+
+
+/* ----------------------------------------------------------------------- --*/
+
+
+/*                                 CSS GRID STYLES                         --*/
+
+
+/* ----------------------------------------------------------------------- --*/
+
+
+/* Responsive layout for the parent grid container*/
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    grid-gap: 8px;
+    margin-top: 32px;
+    grid-template-rows: auto auto auto auto auto auto 1fr;
+    grid-template-areas: "breadcrumbs-section" "last-modified-section" "page-heading-section" "filter-date-section" "kpi-section-1" "kpi-section-2" "ag-grid-section";
+}
+
+@media only screen and (min-width: 672px) {
+    .grid-container {
+        margin-top: 32px;
+        display: grid;
+        /*    background-color: black; */
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        grid-gap: 8px;
+        grid-template-rows: 24px 48px 240px 1fr;
+        grid-template-areas: "breadcrumbs-section last-modified-section" "page-heading-section filter-date-section" "kpi-section-1 kpi-section-2" "ag-grid-section ag-grid-section";
+    }
+}
+
+
+/* CSS Grid Areas */
+
+#breadcrumbs-section {
+    grid-area: breadcrumbs-section;
+    border: 1px dashed #F63BB8;
+}
+
+#last-modified-section {
+    border: 1px dashed #F63BB8;
+    grid-area: last-modified-section;
+}
+
+#page-heading-section {
+    border: 1px dashed #F63BB8;
+    grid-area: page-heading-section;
+}
+
+#filter-date-section {
+    border: 1px dashed #F63BB8;
+    grid-area: filter-date-section;
+}
+
+#kpi-section-1 {
+    border: 1px dashed #F63BB8;
+    grid-area: kpi-section-1;
+    background-color: white;
+}
+
+#kpi-section-2 {
+    border: 1px dashed #F63BB8;
+    grid-area: kpi-section-2;
+    background-color: white;
+}
+
+#ag-grid-section {
+    /*  border: 1px dashed #F63BB8; */
+    grid-area: ag-grid-section;
+    height: 100%;
+    margin-bottom: 16px;
+    background-color: white;
+}
+
+
+/* ----------------------------------------------------------------------- */
+
+
+/*                                   KPI CARD STYLES                       */
+
+
+/* ----------------------------------------------------------------------- */
+
+.kpi-container {
+    display: flex;
+    height: 100%;
+}
+
+.kpi-card {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px;
+    height: auto;
+    border: 1px solid darkblue;
+    border-radius: 2px;
+    color: darkblue;
+    margin: 4px;
+}

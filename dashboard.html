@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LW Advanced Dashboard version index123</title>
+    <link rel="stylesheet" href="node_modules/carbon-components/css/carbon-components.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/@carbon/charts/styles.css" />
+    <style>
+        /* Set the defaul box sizing to border-box */
+        
+        html {
+            box-sizing: border-box;
+        }
+        
+        *,
+        *:before,
+        *after {
+            box-sizing: inherit;
+        }
+        
+        .content-box-element {
+            box-sizing: content-box;
+        }
+        /* CARBON DS CONTENT HOLDER */
+        
+        .bx--content {
+            padding-top: 3rem;
+            margin-right: 0.75rem;
+        }
+        /* Start of the Main Layout Grid */
+        /* default mobile first layout */
+        
+        .grid-container {
+            box-sizing: 0px;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 0.5rem;
+            grid-template-rows: 1fr;
+            grid-template-areas: "breadcrumbs" "heading-ul" "date-ul" "filter-date" "side-filters" "grid-table" "kpi" "chart1" "chart2" "chart3" "chart4" "chart5" "chart6" "list1" "list2" "list3" "bottom-row";
+        }
+        /* responsive layout */
+        
+        @media only screen and (min-width: 760px) {
+            .grid-container {
+                box-sizing: 0px;
+                display: grid;
+                grid-template-columns: 14% 36% 25% 25%;
+                grid-gap: 0.5rem;
+                grid-template-rows: 1.2rem auto 15rem 15rem 15rem 15rem 1rem;
+                grid-template-areas: "breadcrumbs breadcrumbs date-ul date-ul" "heading-ul heading-ul filter-date filter-date" "side-filters kpi chart1 chart2" "side-filters grid-table chart3 chart4" ". grid-table chart5 chart6" ". list1 list2 list3" "bottom-row . . .";
+            }
+        }
+        
+        #breadcrumbs {
+            grid-area: breadcrumbs;
+        }
+        
+        #date-ul {
+            grid-area: date-ul;
+        }
+        
+        #heading-ul {
+            grid-area: heading-ul;
+        }
+        
+        #filter-date {
+            grid-area: filter-date;
+        }
+        
+        #side-filters {
+            background-color: #fff;
+            grid-area: side-filters;
+            padding: 0.5rem;
+        }
+        
+        #kpi {
+            background-color: #f4f4f4;
+            grid-area: kpi;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+            grid-gap: 0.25rem;
+        }
+        
+        #chart1 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart1;
+        }
+        
+        #chart2 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart2;
+        }
+        
+        #chart3 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart3;
+        }
+        
+        #chart4 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart4;
+        }
+        
+        #chart5 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart5;
+        }
+        
+        #chart6 {
+            background-color: #fff;
+            padding: 0.25rem;
+            grid-area: chart6;
+        }
+        
+        #grid-table {
+            background-color: #9E9E9E;
+            grid-area: grid-table;
+            overflow: auto;
+        }
+        
+        #list1 {
+            background-color: #fff;
+            grid-area: list1;
+            padding: 0.25rem;
+        }
+        
+        #list2 {
+            background-color: #fff;
+            grid-area: list2;
+            padding: 0.25rem;
+        }
+        
+        #list3 {
+            background-color: #Fff;
+            grid-area: list3;
+            padding: 0.25rem;
+        }
+        
+        #bottom-row {
+            /* extra row for margin purposes */
+            background-color: #f4f4f4;
+            grid-area: bottom-row;
+        }
+        
+        .kpi-card {
+            display: flex;
+            background-color: #ffffff;
+            /* [1] */
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.2rem;
+            /* [2] */
+        }
+        
+        .card__content {
+            flex-grow: 1;
+            /* [3] */
+            display: flex;
+            /* [4] */
+            flex-direction: column;
+        }
+        
+        .card__link {
+            margin-top: auto;
+            /* [5] */
+        }
+        
+        .flex-row-container {
+            padding: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .kpi-item {
+            padding: 4px;
+        }
+        /* Change the layout for tiles on smaller screens */
+        
+        @media (max-width: 768px) {
+            #grid-kpi {
+                display: grid;
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Flex helper for right aligns */
+        
+        .flex-right {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            align-content: stretch;
+            align-items: flex-start;
+        }
+        
+        .flex-right-child {
+            order: 0;
+            flex: 0 1 auto;
+            align-self: auto;
+        }
+        /* Cards for the KPI Section*/
+        
+        .card-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background-color: #fff;
+        }
+        
+        .card-col-one {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        
+        .card-col-two {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        
+        .extra-padding-top {
+            margin-top: 15px;
+        }
+        /* Clickable tiles in lists */
+        
+        .bx--tile {
+            margin-bottom: 1rem;
+            padding: 0 1rem 1rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 5rem;
+        }
+        
+        .bx--tile__left-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem 0 .75rem;
+            margin-right: .75rem;
+        }
+        
+        .bx--tile__right-content {
+            flex: 2;
+        }
+    </style>
+</head>
+
+<body style="background-color: #f4f4f4;">
+
+    <header class="bx--header" role="banner" aria-label="IBM Platform Name" data-header>
+        <a class="bx--skip-to-content" href="#main-content" tabindex="0">Skip to main content</a>
+        <button class="bx--header__menu-trigger bx--header__action" aria-label="Open menu" title="Open menu" data-navigation-menu-panel-label-expand="Open menu" data-navigation-menu-panel-label-collapse="Close menu" data-navigation-menu-target="#navigation-menu-m6ibyfeacg">
+      
+      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-collapse-icon" width="20" height="20" viewBox="0 0 20 20"><path d="M2 14.8H18V16H2zM2 11.2H18V12.399999999999999H2zM2 7.6H18V8.799999999999999H2zM2 4H18V5.2H2z"></path></svg>
+      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-expand-icon" width="24" height="24" viewBox="0 0 24 24">  <path id="Union_1" data-name="Union 1" d="M0,12.008A12.006,12.006,0,0,1,20.5,3.525,11.889,11.889,0,0,1,24,12.008a12,12,0,0,1-24,0Zm2.2,0A9.811,9.811,0,1,0,12,2.2,9.81,9.81,0,0,0,2.2,12.008Zm10.832,6.368v-9.3H15.21V16.51h2.668v1.867ZM6.178,12.357V5.626H8.358V12.64c0,.439.141.832.753.832.565,0,.738-.5.738-.895V5.626H12.03v6.731c0,1.57-.707,2.794-2.934,2.794C7.244,15.151,6.178,14.271,6.178,12.357Z" fill="#fff"/>
+      </svg>
+    </button>
+        <a class="bx--header__name" href="javascript:void(0)" title="">
+            <span class="bx--header__name--prefix">
+       CRS
+        &nbsp;
+      </span> [Labware v.1.0]
+        </a>
+
+        <nav class="bx--header__nav" aria-label="Platform Name" data-header-nav>
+            <ul class="bx--header__menu-bar" aria-label="Platform Name">
+                <li>
+                    <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="0">
+           Project Mamager
+          </a>
+                </li>
+                <li>
+                    <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="0">
+            Grid Result Entry
+          </a>
+                </li>
+                <li class="bx--header__submenu" data-header-submenu>
+                    <a class="bx--header__menu-item bx--header__menu-title" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)" tabindex="0">
+           Result Entry
+            <svg class="bx--header__menu-arrow" width="12" height="7" aria-hidden="true">
+              <path d="M6.002 5.55L11.27 0l.726.685L6.003 7 0 .685.726 0z" />
+            </svg>
+          </a>
+                    <ul class="bx--header__menu" aria-label="L1 link 3">
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 1
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 2
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Ipsum architecto voluptatem
+                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="bx--header__submenu" data-header-submenu>
+                    <a class="bx--header__menu-item bx--header__menu-title" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)" tabindex="0">
+           Training
+            <svg class="bx--header__menu-arrow" width="12" height="7" aria-hidden="true">
+              <path d="M6.002 5.55L11.27 0l.726.685L6.003 7 0 .685.726 0z" />
+            </svg>
+          </a>
+                    <ul class="bx--header__menu" aria-label="L1 link 4">
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 1
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 2
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Ipsum architecto voluptatem
+                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="bx--header__submenu" data-header-submenu>
+                    <a class="bx--header__menu-item bx--header__menu-title" aria-haspopup="true" aria-expanded="false" href="javascript:void(0)" tabindex="0">
+           Standards
+            <svg class="bx--header__menu-arrow" width="12" height="7" aria-hidden="true">
+              <path d="M6.002 5.55L11.27 0l.726.685L6.003 7 0 .685.726 0z" />
+            </svg>
+          </a>
+                    <ul class="bx--header__menu" aria-label="L1 link 4">
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 1
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Link 2
+                </span>
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="-1">
+                                <span class="bx--text-truncate--end">
+                  Ipsum architecto voluptatem
+                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="bx--header__global">
+            <ul class="bx--header__menu-bar">
+                <li>
+                    <a class="bx--header__menu-item" href="javascript:void(0)" tabindex="0">
+           jakekwon@global.ul.com
+          </a>
+                </li>
+            </ul>
+
+            <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 1" title="Action 1" data-navigation-menu-panel-label-expand="Action 1" data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-bqavcareoq">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-expand-icon" width="20" height="20" viewBox="0 0 32 32"><use xlink:href="./carbon-icons.svg#icon--header--user"></use></svg>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-collapse-icon" width="20" height="20" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg>
+      </button>
+            <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 2" title="Action 2" data-navigation-menu-panel-label-expand="Action 2" data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-bqavcareoq">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-expand-icon" width="20" height="20" viewBox="0 0 14 16"><use xlink:href="./carbon-icons.svg#icon--notification-on"></svg>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-collapse-icon" width="20" height="20" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg>
+      </button>
+            <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 2" title="Action 2" data-navigation-menu-panel-label-expand="Action 2" data-navigation-menu-panel-label-collapse="Close menu" data-product-switcher-target="#switcher-bqavcareoq">
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-expand-icon" width="20" height="20" viewBox="0 0 24 24"><use xlink:href="./carbon-icons.svg#icon--info"></svg>
+        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--navigation-menu-panel-collapse-icon" width="20" height="20" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg>
+      </button>
+
+            <button class="bx--header__menu-trigger bx--header__action" aria-label="Action 3" title="Action 3">
+                <svg width="20" height="20" fill="white">
+                    <title>Add new users to your account</title>
+                    <use xlink:href="./carbon-icons.svg#icon--renew" ></use>
+                    
+                  </svg> </button>
+
+            <button class="bx--header__menu-trigger bx--header__action" aria-label="Close Panel" title="Action 4">
+                <svg width="12" height="12" fill="white">
+                    <title>Add new users to your account</title>
+                    <use xlink:href="./carbon-icons.svg#icon--close" ></use>
+                    
+                  </svg>  </button>
+        </div>
+    </header>
+
+
+    <aside class="bx--side-nav" data-side-nav>
+        <nav class="bx--side-nav__navigation" role="navigation" aria-label="Side navigation">
+            <header class="bx--side-nav__header">
+                <div class="bx--side-nav__icon">
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+          </svg>
+                </div>
+                <div class="bx--side-nav__details">
+
+                    <div class="bx--side-nav__switcher">
+                        <label for="side-nav-switcher" class="bx--assistive-text">
+              Switcher
+            </label>
+                        <select id="carbon-side-nav-switcher" class="bx--side-nav__select">
+              <option
+                class="bx--side-nav__option"
+                disabled=""
+                hidden=""
+                value=""
+                selected=""
+              >
+                Switcher
+              </option>
+              <option class="bx--side-nav__option" value="Option 1">
+                Option 1
+              </option>
+              <option class="bx--side-nav__option" value="Option 2">
+                Option 2
+              </option>
+              <option class="bx--side-nav__option" value="Option 3">
+                Option 3
+              </option>
+            </select>
+                        <div class="bx--side-nav__switcher-chevron">
+                            <svg aria-hidden="true" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path d="M16 22L6 12l1.414-1.414L16 19.172l8.586-8.586L26 12 16 22z" />
+              </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <ul class="bx--side-nav__items">
+                <li class="bx--side-nav__item">
+                    <a class="bx--side-nav__link" href="javascript:void(0)">
+                        <div class="bx--side-nav__icon bx--side-nav__icon--small">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--side-nav__link-text">Link</span>
+                    </a>
+                </li>
+                <li class="bx--side-nav__item bx--side-nav__item--active">
+                    <a class="bx--side-nav__link" href="javascript:void(0)" aria-current="page">
+                        <div class="bx--side-nav__icon bx--side-nav__icon--small">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--side-nav__link-text">Link - active</span>
+                    </a>
+                </li>
+                <li class="bx--side-nav__item">
+                    <a class="bx--side-nav__link" href="javascript:void(0)">
+                        <div class="bx--side-nav__icon bx--side-nav__icon--small">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--side-nav__link-text">
+              Link with really long text that should wrap
+            </span>
+                    </a>
+                </li>
+                <li class="bx--side-nav__item bx--side-nav__item--active">
+                    <a class="bx--side-nav__link bx--side-nav__link--current" href="javascript:void(0)" aria-current="page">
+                        <div class="bx--side-nav__icon bx--side-nav__icon--small">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--side-nav__link-text">
+              Link with really long text that should wrap - active
+            </span>
+                    </a>
+                </li>
+                <li class="bx--side-nav__item bx--side-nav__item--active">
+                    <button class="bx--side-nav__submenu" type="button" aria-haspopup="true" aria-expanded="true">
+            <div class="bx--side-nav__icon">
+              <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+            </div>
+            <span class="bx--side-nav__submenu-title">
+              Category title that is really long and probably should overflow
+            </span>
+            <div
+              class="bx--side-nav__icon bx--side-nav__icon--small bx--side-nav__submenu-chevron">
+              <svg aria-hidden="true" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <path d="M16 22L6 12l1.414-1.414L16 19.172l8.586-8.586L26 12 16 22z" />
+              </svg>
+            </div>
+          </button>
+                    <ul class="bx--side-nav__menu">
+                        <li class="bx--side-nav__menu-item" role="none">
+                            <a class="bx--side-nav__link" href="javascript:void(0)">
+                                <span class="bx--side-nav__link-text">
+                  Link with really long text that probably should be truncated
+                </span>
+                            </a>
+                        </li>
+                        <li class="bx--side-nav__menu-item" role="none">
+                            <a class="bx--side-nav__link" href="javascript:void(0)" aria-current="page">
+                                <span class="bx--side-nav__link-text">
+                  Link with really long text that probably should be truncated
+                </span>
+                            </a>
+                        </li>
+                        <li class="bx--side-nav__menu-item" role="none">
+                            <a class="bx--side-nav__link" href="javascript:void(0)">
+                                <span class="bx--side-nav__link-text">Link</span>
+                            </a>
+                        </li>
+                        <li class="bx--side-nav__menu-item" role="none">
+                            <a class="bx--side-nav__link" href="javascript:void(0)" aria-current="page">
+                                <span class="bx--side-nav__link-text">Link</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <footer class="bx--side-nav__footer">
+                <button class="bx--side-nav__toggle" role="button" title="Close the side navigation menu">
+          <div class="bx--side-nav__icon">
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--side-nav__icon--collapse bx--side-nav-collapse-icon" width="20" height="20" viewBox="0 0 32 32"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg>
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="bx--side-nav__icon--expand bx--side-nav-expand-icon" width="20" height="20" viewBox="0 0 32 32"><path d="M22 16L12 26 10.6 24.6 19.2 16 10.6 7.4 12 6z"></path></svg>
+          </div>
+          <span class="bx--assistive-text">
+            Toggle the expansion state of the navigation
+          </span>
+        </button>
+            </footer>
+        </nav>
+    </aside>
+
+
+    <aside class="bx--panel--overlay" id="switcher-bqavcareoq" data-product-switcher>
+        <div class="bx--product-switcher">
+            <div class="bx--product-switcher__search">
+                <div class="bx--form-item">
+                    <div data-search class="bx--search bx--search--sm bx--search--shell" role="search">
+                        <label id="search-input-label-1" class="bx--label" for="search__input-1">Search</label>
+                        <input class="bx--search-input" type="text" role="search" id="search__input-1" placeholder="Search all products" aria-labelledby="search-input-label-2">
+                        <svg class="bx--search-magnifier" width="16" height="16" viewBox="0 0 16 16">
+              <path d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm4.936-1.27l4.563 4.557-.707.708-4.563-4.558a6.5 6.5 0 1 1 .707-.707z"
+                fill-rule="nonzero" />
+            </svg>
+                        <button class="bx--search-close bx--search-close--hidden" title="Clear search input" aria-label="Clear search input">
+              <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 6.586L5.879 4.464 4.464 5.88 6.586 8l-2.122 2.121 1.415 1.415L8 9.414l2.121 2.122 1.415-1.415L9.414 8l2.122-2.121-1.415-1.415L8 6.586zM8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"
+                  fill-rule="evenodd" />
+              </svg>
+            </button>
+                    </div>
+                </div>
+            </div>
+            <p class="bx--product-switcher__subheader">My Products</p>
+            <ul class="bx--product-switcher__product-list">
+                <li class="bx--product-list__item">
+                    <a class="bx--product-link" tabindex="0" href="javascript:void(0)">
+                        <div class="bx--product-switcher__icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--product-link__name">My Product</span>
+                    </a>
+                    <div data-overflow-menu tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                        <svg width="3" height="15" viewBox="0 0 3 15">
+              <path d="M0 1.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0M0 7.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0M0 13.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0"></path>
+            </svg>
+                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip" tabindex="-1" data-floating-menu-direction="bottom">
+                            <li class="bx--overflow-menu-options__option bx--overflow__item">
+                                <button class="bx--overflow-menu-options__btn" title="Option 1" data-floating-menu-primary-focus>Option 1</button>
+                            </li>
+                            <li class="bx--overflow-menu-options__option">
+                                <button class="bx--overflow-menu-options__btn">Option 2</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="bx--product-list__item">
+                    <a class="bx--product-link" tabindex="0" href="javascript:void(0)">
+                        <div class="bx--product-switcher__icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        <span class="bx--product-link__name">My Product 2</span>
+                    </a>
+                    <div data-overflow-menu tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                        <svg width="3" height="15" viewBox="0 0 3 15">
+              <path d="M0 1.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0M0 7.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0M0 13.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 1 1-3 0"></path>
+            </svg>
+                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip" tabindex="-1" data-floating-menu-direction="bottom">
+                            <li class="bx--overflow-menu-options__option bx--overflow__item">
+                                <button class="bx--overflow-menu-options__btn" title="Option 1" data-floating-menu-primary-focus>Option 1</button>
+                            </li>
+                            <li class="bx--overflow-menu-options__option">
+                                <button class="bx--overflow-menu-options__btn">Option 2</button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bx--product-switcher__item">
+                <button aria-label="Show All Applications" tabindex="0" class="bx--product-switcher__all-btn">
+          View all products
+        </button>
+            </div>
+        </div>
+    </aside>
+
+
+    <div class="bx--navigation" id="navigation-menu-m6ibyfeacg" hidden data-navigation-menu>
+        <div class="bx--navigation-section">
+            <ul class="bx--navigation-items">
+                <li class="bx--navigation-item bx--navigation-item--icon">
+                    <a class="bx--navigation-link" href="javascript:void(0)">
+                        <div class="bx--navigation-icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        Item link
+                    </a>
+                </li>
+                <li class="bx--navigation-item bx--navigation-item--icon">
+                    <a class="bx--navigation-link" href="javascript:void(0)">
+                        <div class="bx--navigation-icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        Item link
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="bx--navigation-section">
+            <ul class="bx--navigation-items">
+                <li class="bx--navigation-item bx--navigation-item--active bx--navigation-item--icon">
+                    <a class="bx--navigation-link" href="javascript:void(0)">
+                        <div class="bx--navigation-icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        Item link
+                    </a>
+                </li>
+                <li class="bx--navigation-item bx--navigation-item--icon">
+                    <a class="bx--navigation-link" href="javascript:void(0)">
+                        <div class="bx--navigation-icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        Item link
+                    </a>
+                </li>
+                <li class="bx--navigation-item bx--navigation-item--icon">
+                    <a class="bx--navigation-link" href="javascript:void(0)">
+                        <div class="bx--navigation-icon">
+                            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true">
+                <path
+                  d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+              </svg>
+                        </div>
+                        Item link
+                    </a>
+                </li>
+                <li class="bx--navigation-item bx--navigation-item--icon">
+                    <div class="bx--navigation__category">
+                        <button class="bx--navigation__category-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="category-1-menu">
+                <div class="bx--navigation-icon">
+  
+                  <svg aria-hidden="true" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                    <path
+                      d="M8.24 25.14L7 26.67a14 14 0 0 0 4.18 2.44l.68-1.88a12 12 0 0 1-3.62-2.09zm-4.05-7.07l-2 .35A13.89 13.89 0 0 0 3.86 23l1.73-1a11.9 11.9 0 0 1-1.4-3.93zm7.63-13.31l-.68-1.88A14 14 0 0 0 7 5.33l1.24 1.53a12 12 0 0 1 3.58-2.1zM5.59 10L3.86 9a13.89 13.89 0 0 0-1.64 4.54l2 .35A11.9 11.9 0 0 1 5.59 10zM16 2v2a12 12 0 0 1 0 24v2a14 14 0 0 0 0-28z" />
+                  </svg>
+                </div>
+                <div class="bx--navigation__category-title">
+                  L1 category
+                  <svg aria-hidden="true" width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                    <path d="M16 22L6 12l1.414-1.414L16 19.172l8.586-8.586L26 12 16 22z" />
+                  </svg>
+                </div>
+              </button>
+                        <ul id="category-1-menu" class="bx--navigation__category-items">
+                            <li class="bx--navigation__category-item">
+                                <a class="bx--navigation-link" href="javascript:void(0)">
+                    Nested link
+                  </a>
+                            </li>
+                            <li class="bx--navigation__category-item bx--navigation__category-item--active">
+                                <a class="bx--navigation-link" href="javascript:void(0)">
+                    Nested link
+                  </a>
+                            </li>
+                            <li class="bx--navigation__category-item">
+                                <a class="bx--navigation-link" href="javascript:void(0)">
+                    Nested link
+                  </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="bx--content">
+        <!-- CSS GRID PARENT -->
+
+        <div class="grid-container">
+            <!-- row 1  -->
+
+            <div id="breadcrumbs">
+                <nav class="bx--breadcrumb" aria-label="breadcrumb">
+                    <div class="bx--breadcrumb-item">
+                        <a href="index.html" class="bx--link">Default Dashboard</a>
+                    </div>
+                    <div class="bx--breadcrumb-item">
+                        <a href="simple-dashboard-with-side-nav.html" class="bx--link">Dashboard With Side Nav</a>
+                    </div>
+                    <div class="bx--breadcrumb-item">
+                        <a href="dashboard.html" class="bx--link">Advanced Dashboard With Charts</a>
+                    </div>
+                </nav>
+
+            </div>
+            <div id="date-ul">
+                <div class="flex-right"><em>Last modified June 21, 2020 &nbsp; &nbsp;</em>
+                    <div class="flex-right-child">
+                        <svg width="16" height="16" fill="gray">
+                        <title>refresh</title>
+                        <use xlink:href="./carbon-icons.svg#icon--renew" ></use>
+                        
+                      </svg>&nbsp; &nbsp;</div>
+                </div>
+            </div>
+            <!-- row 2 -->
+            <div id="heading-ul"> <span><h6>Sample Handler Dashboard</h6></span></div>
+            <div id="filter-date">
+
+
+                <!-- Ranged -->
+                <div class="bx--form-item flex-right">
+                    <!-- Floating  -->
+                    <div data-notification class="bx--toast-notification bx--toast-notification--error bx--toast-notification--low-contrast" role="alert" style="z-index: 1200; position:absolute;">
+                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--toast-notification__icon" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10,1c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S15,1,10,1z M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z"></path><path d="M13.5,14.5l-8-8l1-1l8,8L13.5,14.5z" data-icon-path="inner-path" opacity="0"></path></svg>
+                        <div class="bx--toast-notification__details">
+                            <h3 class="bx--toast-notification__title">Notification title</h3>
+                            <p class="bx--toast-notification__subtitle">Subtitle text goes here.</p>
+                            <p class="bx--toast-notification__caption">Time stamp [00:00:00]</p>
+                        </div>
+                        <button data-notification-btn class="bx--toast-notification__close-button" type="button" aria-label="close">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--toast-notification__close-icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z"></path></svg>
+                    </button>
+                    </div>
+                    <div class="bx--form-item flex-right-child">
+                        <div data-date-picker data-date-picker-type="range" class="bx--date-picker bx--date-picker--range">
+                            <div class="bx--date-picker-container">
+
+                                <div class="bx--date-picker-input__wrapper">
+                                    <input type="text" id="date-picker-1" class="bx--date-picker__input" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="mm/dd/yyyy" data-date-picker-input-from />
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" data-date-picker-icon="true" class="bx--date-picker__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13,2h-2V1h-1v1H6V1H5v1H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V3C14,2.4,13.6,2,13,2z M13,13H3V6h10V13z M13,5H3V3h2v1h1V3h4v1h1V3h2V5z"></path></svg>
+                                </div>
+                            </div>
+                            <div style="display: inline;padding-top:10px;margin: 0 8px;"> from - to</div>
+                            <div class="bx--date-picker-container">
+
+                                <div class="bx--date-picker-input__wrapper">
+                                    <input type="text" id="date-picker-2" class="bx--date-picker__input" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="mm/dd/yyyy" data-date-picker-input-to />
+                                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" data-date-picker-icon="true" class="bx--date-picker__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13,2h-2V1h-1v1H6V1H5v1H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V3C14,2.4,13.6,2,13,2z M13,13H3V6h10V13z M13,5H3V3h2v1h1V3h4v1h1V3h2V5z"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- row 3-->
+            <div id="side-filters">
+                <h4>Filter</h4>
+
+                <label for="select-id" class="bx--label extra-padding-top">Select label</label>
+                <div class="bx--select-input__wrapper extra-padding-top">
+                    <select id="select-id" class="bx--select-input">
+                    <option class="bx--select-option" value=""  disabled selected hidden>
+                      Choose an option
+                    </option>
+                    <option class="bx--select-option" value="solong" >
+                      A much longer option 
+                    </option>
+                    <optgroup class="bx--select-optgroup" label="Category 1">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                    <optgroup class="bx--select-optgroup" label="Category 2">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                  </select>
+
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--select__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+                </div>
+                <div class="bx--select-input__wrapper extra-padding-top">
+                    <select id="select-id" class="bx--select-input">
+                    <option class="bx--select-option" value=""  disabled selected hidden>
+                      Choose an option
+                    </option>
+                    <option class="bx--select-option" value="solong" >
+                      A much longer option 
+                    </option>
+                    <optgroup class="bx--select-optgroup" label="Category 1">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                    <optgroup class="bx--select-optgroup" label="Category 2">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                  </select>
+
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--select__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+                </div>
+                <div class="bx--select-input__wrapper extra-padding-top">
+                    <select id="select-id" class="bx--select-input">
+                    <option class="bx--select-option" value=""  disabled selected hidden>
+                      Choose an option
+                    </option>
+                    <option class="bx--select-option" value="solong" >
+                      A much longer option 
+                    </option>
+                    <optgroup class="bx--select-optgroup" label="Category 1">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                    <optgroup class="bx--select-optgroup" label="Category 2">
+                      <option class="bx--select-option" value="option1" >
+                        Option 1
+                      </option>
+                      <option class="bx--select-option" value="option2" >
+                        Option 2
+                      </option>
+                    </optgroup>
+                  </select>
+
+                    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--select__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+                </div>
+                <input class="bx--toggle-input bx--toggle-input--small" id="smalltoggle1" type="checkbox">
+                <label class="bx--toggle-input__label" for="smalltoggle1" aria-label="example toggle with state indicator text">
+                  <span class="bx--toggle__switch">
+                    <svg class="bx--toggle__check" width="6px" height="5px" viewBox="0 0 6 5">
+                      <path d="M2.2 2.7L5 0 6 1 2.2 5 0 2.7 1 1.5z" />
+                    </svg>
+                    <span class="bx--toggle__text--on" aria-hidden="true">On</span>
+                    <span class="bx--toggle__text--off" aria-hidden="true">Off</span>
+                    
+                  </span>
+                </label>
+                <button class="bx--btn bx--btn--sm bx--btn--secondary extra-padding-top">Reset all</button>
+
+            </div>
+            <!-- KPI CELLS -->
+
+            <div id="kpi">
+                <!-- Flex based card -->
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>Logged Samples</h4>
+                        <em>Count</em>
+                        <h1>61</h1>
+                    </div>
+                    <div class="card-col-two">
+                        <svg width="20" height="20" fill="darkgray">
+                            <title>Calendar Icon</title>
+                            <use xlink:href="./carbon-icons.svg#icon--calendar" ></use>
+                            
+                          </svg>
+                        <svg width="20" height="20" fill="#146600">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--checkmark--solid" ></use>
+                            
+                          </svg>
+                    </div>
+
+                </div>
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>Transfers from Lab</h4>
+                        <em>Arkansas</em>
+                        <h1>08</h1>
+                    </div>
+                    <div class="card-col-two">
+                        <svg width="20" height="20" fill="darkgray">
+                            <title>Calendar Icon</title>
+                            <use xlink:href="./carbon-icons.svg#icon--calendar" ></use>
+                            
+                          </svg>
+                        <svg width="20" height="20" fill="#00518A">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--info--solid" ></use>
+                            
+                          </svg>
+                    </div>
+
+                </div>
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>Without Samples</h4>
+                        <em>Count</em>
+                        <h1>121</h1>
+                    </div>
+                    <div class="card-col-two">
+                        <svg width="20" height="20" fill="darkgray">
+                            <title>Calendar Icon</title>
+                            <use xlink:href="./carbon-icons.svg#icon--calendar" ></use>
+                            
+                          </svg>
+                        <svg width="20" height="20" fill="#C01B21">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--warning--solid" ></use>
+                            
+                          </svg>
+                    </div>
+
+                </div>
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>Disposition</h4>
+                        <em>Count</em>
+                        <h1>23</h1>
+                    </div>
+                    <div class="card-col-two">
+                        <svg width="20" height="20" fill="darkgray">
+                            <title>Calendar Icon</title>
+                            <use xlink:href="./carbon-icons.svg#icon--calendar" ></use>
+                            
+                          </svg>
+                        <svg width="20" height="20" fill="#C01B21">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--warning--solid" ></use>
+                            
+                          </svg>
+                    </div>
+
+                </div>
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>Quaranteened</h4>
+                        <em>Count</em>
+                        <h1>03</h1>
+                    </div>
+                    <div class="card-col-two">
+
+                        <div data-overflow-menu class="bx--overflow-menu">
+                            <button class="bx--overflow-menu__trigger bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--right bx--tooltip--align-start" aria-haspopup="true" aria-expanded="false" id="example-qzrvj7eu95j-trigger" aria-controls="example-qzrvj7eu95j">
+                              <span class="bx--assistive-text">Overflow</span>
+                              <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                            </button>
+                            <div class="bx--overflow-menu-options" tabindex="-1" role="menu" aria-labelledby="example-qzrvj7eu95j-trigger" data-floating-menu-direction="top" id="example-qzrvj7eu95j">
+                                <ul class="bx--overflow-menu-options__content">
+                                    <li class="bx--overflow-menu-options__option  ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem" title="An example option that is really long to show what should be done to handle long text" data-floating-menu-primary-focus>
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      An example option that is really long to show what should be done to handle long text
+                                    </span>
+                                  </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      Option 2
+                                    </span>
+                                  </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      Option 3
+                                    </span>
+                                  </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      Option 4
+                                    </span>
+                                  </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  bx--overflow-menu-options__option--disabled  ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem" disabled>
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      Disabled
+                                    </span>
+                                  </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option   bx--overflow-menu-options__option--danger ">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                    <span class="bx--overflow-menu-options__option-content">
+                                      Danger option
+                                    </span>
+                                  </button>
+                                    </li>
+                                </ul>
+                                <!-- Note: focusable span allows for focus wrap feature within Overflow Menus -->
+                                <span tabindex="0"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-container">
+
+                    <div class="card-col-one">
+
+                        <h4>On Time</h4>
+
+                        <h1>100%</h1>
+                    </div>
+                    <div class="card-col-two">
+                        <svg width="20" height="20" fill="darkgray">
+                            <title>Calendar Icon</title>
+                            <use xlink:href="./carbon-icons.svg#icon--calendar" ></use>
+                            
+                          </svg>
+                        <svg width="20" height="20" fill="#146600">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--checkmark--solid" ></use>
+                            
+                          </svg>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <!-- Row 4 -->
+            <div id="grid-table">
+
+                <!-- v10 Data Table -->
+                <div class="bx--data-table-container" data-table style="min-width: 0;">
+                    <div class="bx--data-table-header">
+                        <h4 class="bx--data-table-header__title">Latest Samples</h4>
+                        <p class="bx--data-table-header__description">Optional Helper Text</p>
+                    </div>
+                    <!-- Toolbar Content -->
+                    <section class="bx--table-toolbar">
+                        <!-- Batch actions -->
+                        <div class="bx--batch-actions" aria-label="Table Action Bar">
+                            <div class="bx--action-list">
+                                <button class="bx--btn bx--btn--primary" type="button">
+                            Delete
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg>
+                          </button>
+                                <button class="bx--btn bx--btn--primary" type="button">
+                            Save
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg>
+                          </button>
+                                <button class="bx--btn bx--btn--primary" type="button">
+                            Download
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg>
+                          </button>
+                                <button data-event="action-bar-cancel" class="bx--btn bx--btn--primary bx--batch-summary__cancel">Cancel</button>
+                            </div>
+                            <div class="bx--batch-summary">
+                                <p class="bx--batch-summary__para">
+                                    <span data-items-selected>3</span> items selected
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bx--toolbar-content">
+                            <!--  Default hidden search -->
+                            <div class="bx--toolbar-search-container-expandable">
+                                <div data-search class="bx--search bx--search--sm" role="search">
+                                    <div class="bx--search-magnifier" tabindex="0">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--toolbar-action__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M15,14.3L10.7,10c1.9-2.3,1.6-5.8-0.7-7.7S4.2,0.7,2.3,3S0.7,8.8,3,10.7c2,1.7,5,1.7,7,0l4.3,4.3L15,14.3z M2,6.5	C2,4,4,2,6.5,2S11,4,11,6.5S9,11,6.5,11S2,9,2,6.5z"></path></svg>
+                                    </div>
+                                    <label id="search-input-label-1" class="bx--label" for="search__input-2">Search</label>
+                                    <input class="bx--search-input" type="text" id="search__input-2" role="search" placeholder="Search" aria-labelledby="search-input-label-1">
+                                    <button class="bx--search-close bx--search-close--hidden" title="Clear search input" aria-label="Clear search input">
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12 4.7L11.3 4 8 7.3 4.7 4 4 4.7 7.3 8 4 11.3 4.7 12 8 8.7 11.3 12 12 11.3 8.7 8z"></path></svg>
+                              </button>
+                                </div>
+                            </div>
+
+                            <!-- Persistent Search -->
+
+                            <!-- Toolbar Overflow Menu -->
+                            <div class="bx--overflow-menu bx--toolbar-action" data-overflow-menu role="button" tabindex="0" aria-label="Overflow" aria-haspopup="true" aria-expanded="false">
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--toolbar-action__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5,8.4c0-0.1,0-0.3,0-0.4c0-0.1,0-0.3,0-0.4l1-0.8c0.4-0.3,0.4-0.9,0.2-1.3l-1.2-2C13.3,3.2,13,3,12.6,3	c-0.1,0-0.2,0-0.3,0.1l-1.2,0.4c-0.2-0.1-0.4-0.3-0.7-0.4l-0.3-1.3C10.1,1.3,9.7,1,9.2,1H6.8c-0.5,0-0.9,0.3-1,0.8L5.6,3.1	C5.3,3.2,5.1,3.3,4.9,3.4L3.7,3C3.6,3,3.5,3,3.4,3C3,3,2.7,3.2,2.5,3.5l-1.2,2C1.1,5.9,1.2,6.4,1.6,6.8l0.9,0.9c0,0.1,0,0.3,0,0.4	c0,0.1,0,0.3,0,0.4L1.6,9.2c-0.4,0.3-0.5,0.9-0.2,1.3l1.2,2C2.7,12.8,3,13,3.4,13c0.1,0,0.2,0,0.3-0.1l1.2-0.4	c0.2,0.1,0.4,0.3,0.7,0.4l0.3,1.3c0.1,0.5,0.5,0.8,1,0.8h2.4c0.5,0,0.9-0.3,1-0.8l0.3-1.3c0.2-0.1,0.4-0.2,0.7-0.4l1.2,0.4	c0.1,0,0.2,0.1,0.3,0.1c0.4,0,0.7-0.2,0.9-0.5l1.1-2c0.2-0.4,0.2-0.9-0.2-1.3L13.5,8.4z M12.6,12l-1.7-0.6c-0.4,0.3-0.9,0.6-1.4,0.8	L9.2,14H6.8l-0.4-1.8c-0.5-0.2-0.9-0.5-1.4-0.8L3.4,12l-1.2-2l1.4-1.2c-0.1-0.5-0.1-1.1,0-1.6L2.2,6l1.2-2l1.7,0.6	C5.5,4.2,6,4,6.5,3.8L6.8,2h2.4l0.4,1.8c0.5,0.2,0.9,0.5,1.4,0.8L12.6,4l1.2,2l-1.4,1.2c0.1,0.5,0.1,1.1,0,1.6l1.4,1.2L12.6,12z"></path><path d="M8,11c-1.7,0-3-1.3-3-3s1.3-3,3-3s3,1.3,3,3C11,9.6,9.7,11,8,11C8,11,8,11,8,11z M8,6C6.9,6,6,6.8,6,7.9C6,7.9,6,8,6,8	c0,1.1,0.8,2,1.9,2c0,0,0.1,0,0.1,0c1.1,0,2-0.8,2-1.9c0,0,0-0.1,0-0.1C10,6.9,9.2,6,8,6C8.1,6,8,6,8,6z"></path></svg>
+                                <ul class="bx--overflow-menu-options bx--overflow-menu--flip" tabindex="-1" role="menu" aria-label="Overflow" data-floating-menu-direction="bottom">
+                                    <li class="bx--overflow-menu-options__option  bx--overflow-menu--data-table " role="presentation">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem" data-floating-menu-primary-focus>
+                                  <div class="bx--overflow-menu-options__option-content">
+                                  Option 1
+                                  </div>
+                                </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  bx--overflow-menu--data-table " role="presentation">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                  <div class="bx--overflow-menu-options__option-content">
+                                  Option 2
+                                  </div>
+                                </button>
+                                    </li>
+                                    <li class="bx--overflow-menu-options__option  bx--overflow-menu--data-table " role="presentation">
+                                        <button class="bx--overflow-menu-options__btn" role="menuitem">
+                                  <div class="bx--overflow-menu-options__option-content">
+                                  Option 3
+                                  </div>
+                                </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!--  Toolbar primary button -->
+                            <button class="bx--btn bx--btn--sm bx--btn--primary">
+                           Primary Button 
+                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+                        </button>
+                        </div>
+                    </section>
+                    <!-- End Toolbar Content -->
+
+                    <!-- Table -->
+                    <table class="bx--data-table  bx--data-table--sort">
+                        <thead>
+                            <tr>
+                                <th class="bx--table-column-checkbox">
+                                    <!-- checkbox th -->
+                                    <input data-event="select-all" id="bx--checkbox-20" class="bx--checkbox" type="checkbox" value="green" name="checkbox-20">
+                                    <label for="bx--checkbox-20" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Name">
+                                <span class="bx--table-header-label">Name</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Protocol">
+                                <span class="bx--table-header-label">Protocol</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Port">
+                                <span class="bx--table-header-label">Port</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Rule">
+                                <span class="bx--table-header-label">Rule</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Attached Groups">
+                                <span class="bx--table-header-label">Attached Groups</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th>
+                                    <!-- checkbox th -->
+                                    <!-- sortable th  -->
+                                    <button class="bx--table-sort" data-event="sort" title="Status">
+                                <span class="bx--table-header-label">Status</span>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M12.3 9.3L8.5 13.1 8.5 1 7.5 1 7.5 13.1 3.7 9.3 3 10 8 15 13 10z"></path></svg>
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--table-sort__icon-unsorted" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.8 10.3L12 12.1 12 2 11 2 11 12.1 9.2 10.3 8.5 11 11.5 14 14.5 11zM4.5 2L1.5 5 2.2 5.7 4 3.9 4 14 5 14 5 3.9 6.8 5.7 7.5 5z"></path></svg>
+                              </button>
+                                    <!-- no sort th -->
+                                </th>
+                                <th class="bx--table-column-menu">
+                                    <!-- checkbox th -->
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-checkbox">
+                                    <input data-event="select" id="bx--checkbox-16" class="bx--checkbox" type="checkbox" value="green" name="checkbox-16">
+                                    <label for="bx--checkbox-16" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                                <!-- inline action td's -->
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Load Balancer 1
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    HTTP
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    80
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Round Robin
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Maureen’s VM Groups Testing a really long text here
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Active
+                                </td>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-menu">
+                                    <div data-overflow-menu role="menu" tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip">
+
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 13H15V14H1zM12.7 4.5c.4-.4.4-1 0-1.4 0 0 0 0 0 0l-1.8-1.8c-.4-.4-1-.4-1.4 0 0 0 0 0 0 0L2 8.8V12h3.2L12.7 4.5zM10.2 2L12 3.8l-1.5 1.5L8.7 3.5 10.2 2zM3 11V9.2l5-5L9.8 6l-5 5H3z"></path></svg> Edit
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg> Download
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg> Save
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg> Delete
+                                        </div>
+                                      </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <!-- inline edit tds -->
+                            </tr>
+                            <!-- Expandable child row -->
+                            <tr>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-checkbox">
+                                    <input data-event="select" id="bx--checkbox-14" class="bx--checkbox" type="checkbox" value="green" name="checkbox-14">
+                                    <label for="bx--checkbox-14" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                                <!-- inline action td's -->
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Load Balancer 5
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    HTTP
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    80
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Round Robin
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Maureen’s VM Groups
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Active
+                                </td>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-menu">
+                                    <div data-overflow-menu role="menu" tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip">
+
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 13H15V14H1zM12.7 4.5c.4-.4.4-1 0-1.4 0 0 0 0 0 0l-1.8-1.8c-.4-.4-1-.4-1.4 0 0 0 0 0 0 0L2 8.8V12h3.2L12.7 4.5zM10.2 2L12 3.8l-1.5 1.5L8.7 3.5 10.2 2zM3 11V9.2l5-5L9.8 6l-5 5H3z"></path></svg> Edit
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg> Download
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg> Save
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg> Delete
+                                        </div>
+                                      </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <!-- inline edit tds -->
+                            </tr>
+                            <!-- Expandable child row -->
+                            <tr>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-checkbox">
+                                    <input data-event="select" id="bx--checkbox-15" class="bx--checkbox" type="checkbox" value="green" name="checkbox-15">
+                                    <label for="bx--checkbox-15" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                                <!-- inline action td's -->
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Load Balancer 5
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    HTTP
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    80
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Round Robin
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Maureen’s VM Groups
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Active
+                                </td>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-menu">
+                                    <div data-overflow-menu role="menu" tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip">
+
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 13H15V14H1zM12.7 4.5c.4-.4.4-1 0-1.4 0 0 0 0 0 0l-1.8-1.8c-.4-.4-1-.4-1.4 0 0 0 0 0 0 0L2 8.8V12h3.2L12.7 4.5zM10.2 2L12 3.8l-1.5 1.5L8.7 3.5 10.2 2zM3 11V9.2l5-5L9.8 6l-5 5H3z"></path></svg> Edit
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg> Download
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg> Save
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg> Delete
+                                        </div>
+                                      </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <!-- inline edit tds -->
+                            </tr>
+                            <!-- Expandable child row -->
+                            <tr>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-checkbox">
+                                    <input data-event="select" id="bx--checkbox-11" class="bx--checkbox" type="checkbox" value="green" name="checkbox-11">
+                                    <label for="bx--checkbox-11" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                                <!-- inline action td's -->
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Load Balancer 5
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    HTTP
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    80
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Round Robin
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Maureen’s VM Groups
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Active
+                                </td>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-menu">
+                                    <div data-overflow-menu role="menu" tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip">
+
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 13H15V14H1zM12.7 4.5c.4-.4.4-1 0-1.4 0 0 0 0 0 0l-1.8-1.8c-.4-.4-1-.4-1.4 0 0 0 0 0 0 0L2 8.8V12h3.2L12.7 4.5zM10.2 2L12 3.8l-1.5 1.5L8.7 3.5 10.2 2zM3 11V9.2l5-5L9.8 6l-5 5H3z"></path></svg> Edit
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg> Download
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg> Save
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg> Delete
+                                        </div>
+                                      </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <!-- inline edit tds -->
+                            </tr>
+                            <!-- Expandable child row -->
+                            <tr>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-checkbox">
+                                    <input data-event="select" id="bx--checkbox-12" class="bx--checkbox" type="checkbox" value="green" name="checkbox-12">
+                                    <label for="bx--checkbox-12" class="bx--checkbox-label" aria-label="Label name"></label>
+                                </td>
+                                <!-- inline action td's -->
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Load Balancer 5
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    HTTP
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    80
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Round Robin
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Maureen’s VM Groups
+                                </td>
+                                <!-- expand icon td -->
+                                <td>
+                                    <!-- truncated new markup -->
+                                    Active
+                                </td>
+                                <!-- expand icon td -->
+                                <td class="bx--table-column-menu">
+                                    <div data-overflow-menu role="menu" tabindex="0" aria-label="Overflow menu description" class="bx--overflow-menu">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--overflow-menu__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="3" r="1"></circle><circle cx="8" cy="8" r="1"></circle><circle cx="8" cy="13" r="1"></circle></svg>
+                                        <ul class="bx--overflow-menu-options bx--overflow-menu--flip">
+
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                         <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 13H15V14H1zM12.7 4.5c.4-.4.4-1 0-1.4 0 0 0 0 0 0l-1.8-1.8c-.4-.4-1-.4-1.4 0 0 0 0 0 0 0L2 8.8V12h3.2L12.7 4.5zM10.2 2L12 3.8l-1.5 1.5L8.7 3.5 10.2 2zM3 11V9.2l5-5L9.8 6l-5 5H3z"></path></svg> Edit
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 7L12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12zM13 12v2H3v-2H2v2l0 0c0 .6.4 1 1 1h10c.6 0 1-.4 1-1l0 0v-2H13z"></path></svg> Download
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.9,4.6l-2.5-2.5C11.3,2.1,11.1,2,11,2H3C2.4,2,2,2.4,2,3v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5	C14,4.9,13.9,4.7,13.9,4.6z M6,3h4v2H6V3z M10,13H6V9h4V13z M11,13V9c0-0.6-0.4-1-1-1H6C5.4,8,5,8.4,5,9v4H3V3h2v2c0,0.6,0.4,1,1,1	h4c0.6,0,1-0.4,1-1V3.2l2,2V13H11z"></path></svg> Save
+                                        </div>
+                                      </button>
+                                            </li>
+                                            <li class="bx--overflow-menu-options__option bx--table-row--menu-option">
+                                                <button class="bx--overflow-menu-options__btn" onclick="console.log('keyboard action')">
+                                        <div class="bx--overflow-menu-options__option-content">
+                                          <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 6H7V12H6zM9 6H10V12H9z"></path><path d="M2 3v1h1v10c0 .6.4 1 1 1h8c.6 0 1-.4 1-1V4h1V3H2zM4 14V4h8v10H4zM6 1H10V2H6z"></path></svg> Delete
+                                        </div>
+                                      </button>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
+                                <!-- inline edit tds -->
+                            </tr>
+                            <!-- Expandable child row -->
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination -->
+                </div>
+            </div>
+
+            <div id="chart1">
+                <div id="my-bar-chart"></div>
+            </div>
+            <div id="chart2">
+                <div id="my-pie-chart"></div>
+            </div>
+            <div id="chart3">
+                <div id="my-donut-chart"></div>
+            </div>
+            <div id="chart4">
+                <div id="my-meter-chart"></div>
+            </div>
+            <!-- Row 5 -->
+            <div id="chart5"><span id="my-simple-chart"></span></div>
+
+            <div id="chart6">
+                <div id="my-area-chart"></div>
+            </div>
+            <!-- Row 6 -->
+            <div id="list1" style="overflow: auto;">
+                <h4>Data One</h4>
+                <a data-tile="clickable" class="bx--tile bx--tile--clickable">
+                    <div class="bx--tile__left-content">
+
+                        <svg width="20" height="20" fill=" #003357">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--user" ></use>
+                            
+                          </svg>
+                    </div>
+                    <div class="bx--tile__right-content">
+                        <h4>10 Users working on..</h4>
+                        <p>Here’s where to find the real breakfast of champions</p>
+                    </div>
+                </a>
+                <a data-tile="clickable" class="bx--tile bx--tile--clickable">
+                    <div class="bx--tile__left-content">
+
+                        <svg width="20" height="20" fill=" #003357">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--user" ></use>
+                            
+                          </svg>
+                    </div>
+                    <div class="bx--tile__right-content">
+                        <h4>10 best breakfast tacos</h4>
+                        <p>Here’s where to find the real breakfast of champions</p>
+                    </div>
+                </a>
+                <a data-tile="clickable" class="bx--tile bx--tile--clickable">
+                    <div class="bx--tile__left-content">
+
+                        <svg width="20" height="20" fill=" #003357">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--user" ></use>
+                            
+                          </svg>
+                    </div>
+                    <div class="bx--tile__right-content">
+                        <h4>10 best breakfast tacos</h4>
+                        <p>Here’s where to find the real breakfast of champions</p>
+                    </div>
+                </a>
+                <a data-tile="clickable" class="bx--tile bx--tile--clickable">
+                    <div class="bx--tile__left-content">
+
+                        <svg width="20" height="20" fill=" #003357">
+                            <title>Add new users to your account</title>
+                            <use xlink:href="./carbon-icons.svg#icon--user" ></use>
+                            
+                          </svg>
+                    </div>
+                    <div class="bx--tile__right-content">
+                        <h4>10 best breakfast tacos</h4>
+                        <p>Here’s where to find the real breakfast of champions</p>
+                    </div>
+                </a>
+            </div>
+
+            <div id="list2" style="overflow:auto">
+                <section class="bx--structured-list bx--structured-list--selection" data-structured-list>
+                    <div class="bx--structured-list-thead">
+                        <div class="bx--structured-list-row bx--structured-list-row--header-row">
+                            <div class="bx--structured-list-th">Column1</div>
+                            <div class="bx--structured-list-th">Column2</div>
+                            <div class="bx--structured-list-th"></div>
+                        </div>
+                    </div>
+                    <div class="bx--structured-list-tbody">
+                        <label for="apache-id" aria-label="apache spark" class="bx--structured-list-row bx--structured-list-row--selected" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 1</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue.
+              </div>
+                    <input tabindex="-1" id="apache-id" class="bx--structured-list-input" value="apache spark" type="radio" name="services" title="apache spark" checked />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="cloudant-id" aria-label="Cloudant" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 2</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue. Aenean posuere sem vel euismod dignissim. Nulla ut cursus dolor. Pellentesque vulputate nisl a porttitor interdum.
+              </div>
+                    <input tabindex="-1" id="cloudant-id" class="bx--structured-list-input" value="Cloudant" type="radio" name="services" title="Cloudant" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="block-storate-id" aria-label="block-storage" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 3</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue.
+              </div>
+                    <input tabindex="-1" id="block-storate-id" class="bx--structured-list-input" value="block-storage" type="radio" name="services" title="block-storage" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="open-whisk-id" aria-label="open-whisk" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 4</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue. Aenean posuere sem vel euismod dignissim. Nulla ut cursus dolor. Pellentesque vulputate nisl a porttitor interdum.
+              </div>
+                    <input tabindex="-1" id="open-whisk-id" class="bx--structured-list-input" value="open-whisk" type="radio" name="services" title="open-whisk" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                    </div>
+                </section>
+            </div>
+            <div id="list3" style="overflow:auto;">
+                <section class="bx--structured-list bx--structured-list--selection" data-structured-list>
+                    <div class="bx--structured-list-thead">
+                        <div class="bx--structured-list-row bx--structured-list-row--header-row">
+                            <div class="bx--structured-list-th">Column1</div>
+                            <div class="bx--structured-list-th">Column2</div>
+                            <div class="bx--structured-list-th"></div>
+                        </div>
+                    </div>
+                    <div class="bx--structured-list-tbody">
+                        <label for="apache-id" aria-label="apache spark" class="bx--structured-list-row bx--structured-list-row--selected" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 1</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue.
+              </div>
+                    <input tabindex="-1" id="apache-id" class="bx--structured-list-input" value="apache spark" type="radio" name="services" title="apache spark" checked />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="cloudant-id" aria-label="Cloudant" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 2</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue. Aenean posuere sem vel euismod dignissim. Nulla ut cursus dolor. Pellentesque vulputate nisl a porttitor interdum.
+              </div>
+                    <input tabindex="-1" id="cloudant-id" class="bx--structured-list-input" value="Cloudant" type="radio" name="services" title="Cloudant" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="block-storate-id" aria-label="block-storage" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 3</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue.
+              </div>
+                    <input tabindex="-1" id="block-storate-id" class="bx--structured-list-input" value="block-storage" type="radio" name="services" title="block-storage" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                        <label for="open-whisk-id" aria-label="open-whisk" class="bx--structured-list-row" tabindex="0">
+                      <div class="bx--structured-list-td bx--structured-list-content--nowrap">Row 4</div>
+                      <div class="bx--structured-list-td">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna, finibus id tortor sed, aliquet bibendum augue. Aenean posuere sem vel euismod dignissim. Nulla ut cursus dolor. Pellentesque vulputate nisl a porttitor interdum.
+              </div>
+                    <input tabindex="-1" id="open-whisk-id" class="bx--structured-list-input" value="open-whisk" type="radio" name="services" title="open-whisk" />
+                    <div class="bx--structured-list-td">
+                      <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--structured-list-svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8,1C4.1,1,1,4.1,1,8c0,3.9,3.1,7,7,7s7-3.1,7-7C15,4.1,11.9,1,8,1z M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z"></path><path d="M7,11L4.3,8.3l0.9-0.8L7,9.3l4-3.9l0.9,0.8L7,11z" data-icon-path="inner-path" opacity="0"></path></svg>
+                    </div>
+                  </label>
+                    </div>
+                </section>
+            </div>
+            <div id="bottom-row">
+                <!-- used for extra margin -->
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/@carbon/charts/bundle.js"></script>
+
+        <script src="js/index.js"></script>
+        <script src="js/bar.js"></script>
+        <!--   <script src="./svgxuse.js"></script> -->
+        <script src="node_modules/carbon-components/scripts/carbon-components.min.js"></script>
+</body>
+
+</html>

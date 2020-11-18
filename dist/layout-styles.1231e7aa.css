@@ -1,0 +1,136 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    box-sizing: border-box;
+}
+
+
+/* Set the defaul box sizing to border-box */
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*after {
+    box-sizing: inherit;
+}
+
+
+/* Remove the Labware iframe border */
+
+iframe {
+    border: none;
+}
+
+
+/* ----------------------------------------------------------------------- --*/
+
+
+/*                                 CSS GRID STYLES                         --*/
+
+
+/* ----------------------------------------------------------------------- --*/
+
+
+/* Responsive layout for the parent grid container*/
+
+.container {
+    text-align: center;
+    display: grid;
+    background-color: black;
+    grid-template-columns: 1fr;
+    height: 100vh;
+    grid-gap: 8px;
+    grid-template-rows: 48px 24px 24px 48px 48PX 240px 240PX 1fr;
+    grid-template-areas: "header" "breadcrumbs-section" "last-modified-section" "page-heading-section" "filter-date-section" "kpi-section-1" "kpi-section-2" "ag-grid-section";
+}
+
+@media only screen and (min-width: 672px) {
+    .container {
+        text-align: center;
+        display: grid;
+        /*    background-color: black; */
+        grid-template-columns: 1fr 1fr;
+        height: 100vh;
+        grid-gap: 8px;
+        grid-template-rows: 48px 24px 48px 240px 1fr;
+        grid-template-areas: "header header" "breadcrumbs-section last-modified-section" "page-heading-section filter-date-section" "kpi-section-1 kpi-section-2" "ag-grid-section ag-grid-section";
+    }
+}
+
+
+/* CSS Grid Areas */
+
+#breadcrumbs-section {
+    background-color: #105a63;
+    grid-area: breadcrumbs-section;
+}
+
+#last-modified-section {
+    background-color: #105a63;
+    grid-area: last-modified-section;
+}
+
+#page-heading-section {
+    background-color: #F63BB8;
+    grid-area: page-heading-section;
+}
+
+#filter-date-section {
+    background-color: #F63BB8;
+    grid-area: filter-date-section;
+}
+
+#kpi-section-1 {
+    background-color: #FEAEE3;
+    grid-area: kpi-section-1;
+}
+
+#kpi-section-2 {
+    background-color: #FEAEE3;
+    grid-area: kpi-section-2;
+}
+
+#ag-grid-section {
+    background-color: #5f0b46;
+    grid-area: ag-grid-section;
+    height: 100%;
+}
+
+.header {
+    background-color: #5f0b46;
+    grid-area: header;
+}
+
+
+/* ----------------------------------------------------------------------- */
+
+
+/*                                   KPI CARD STYLES                       */
+
+
+/* ----------------------------------------------------------------------- */
+
+.kpi-container {
+    display: flex;
+    height: 100%;
+}
+
+.kpi-card {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 16px;
+    height: auto;
+    border: 1px solid darkblue;
+    border-radius: 2px;
+    color: darkblue;
+    margin: 4px;
+}
+
+/*# sourceMappingURL=/layout-styles.1231e7aa.css.map */

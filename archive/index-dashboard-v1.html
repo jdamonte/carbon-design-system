@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: 1.5rem 3rem 1fr;
+            grid-template-areas: 'header section main';
+            height: 100vh;
+        }
+        
+        header {
+            grid-area: header;
+        }
+        
+        section {
+            grid-area: section;
+        }
+        
+        .main {
+            grid-area: main;
+            background-color: #f4f4f4;
+        }
+        /* flexing header and footer*/
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: darkblue;
+            padding: 0 15px;
+        }
+        /* Layout for main content overview  and its cards*/
+        
+        .main_overview {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            border-bottom: 1px solid lightgreen;
+        }
+        
+        .overview_card {
+            flex-basis: 250px;
+            flex-grow: 1;
+            margin: 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            /* background-color: seagreen; */
+            height: 100px;
+            border: 1px solid darkblue;
+            border-radius: 4px;
+            color: darkblue;
+        }
+        /* Layout for main-cards section // below main_overview */
+        
+        .main_cards {
+            margin: 8px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas: 'card1 card2' 'card1 card3';
+            grid-gap: 8px;
+        }
+        
+        .card {
+            padding: 20px;
+            border: 1px solid tomato;
+            color: tomato;
+        }
+        
+        .card:first-child {
+            grid-area: card1;
+        }
+        
+        .card:nth-child(2) {
+            grid-area: card2;
+        }
+        
+        .card:nth-child(3) {
+            grid-area: card3;
+        }
+        /* responsive layout */
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <header>header</header>
+        <section>section</section>
+        <main class="main">
+            <div class="main_overview">
+                <div class="overview_card">
+                    <div class="overview_card-info">KPI ONE</div>
+                    <div class="overview_card-icon">Card</div>
+                </div>
+                <div class="overview_card">
+                    <div class="overview_card-info">KPI TWO</div>
+                    <div class="overview_card-icon">Card</div>
+                </div>
+                <div class="overview_card">
+                    <div class="overview_card-info">KPI THREE</div>
+                    <div class="overview_card-icon">Card</div>
+                </div>
+                <div class="overview_card">
+                    <div class="overview_card-info">KPI FOUR</div>
+                    <div class="overview_card-icon">Card</div>
+                </div>
+            </div>
+
+            <div class="main_cards">
+                <div class="card">ag-GRID goes here
+                </div>
+                <div class="card">Filter ag-GRID CARD</div>
+                <div class="card">CHART KPI</div>
+            </div>
+        </main>
+
+    </div>
+
+</body>
+
+</html>

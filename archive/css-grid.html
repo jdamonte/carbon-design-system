@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid</title>
+    <style>
+         :root {
+            --main-radius: 5px;
+            --main-padding: 5px;
+        }
+        
+        .content-bg {
+            background-color: #fff;
+            margin: 1rem;
+            padding: 2rem;
+        }
+        
+        .container {
+            display: grid;
+            height: 100vh;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 0.2fr 1.5fr 1.2fr 0.8fr;
+            grid-template-areas: "nav nav nav nav" "sidebar main main main" "content1a content1 content2 content3" "footer footer footer footer";
+            grid-gap: 0.2rem;
+            font-weight: bold;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: rgb(64, 64, 80);
+            grid-area: nav;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar {
+            background-color: cadetblue;
+            grid-area: sidebar;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        main {
+            background-color: crimson;
+            grid-area: main;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            padding: 0.2rem;
+        }
+        
+        .content1a {
+            background-color: cornflowerblue;
+            grid-area: content1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content1 {
+            background-color: cornflowerblue;
+            grid-area: content1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content2 {
+            background-color: cornflowerblue;
+            grid-area: content2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .content3 {
+            background-color: cornflowerblue;
+            grid-area: content3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        footer {
+            background-color: rgb(235, 211, 159);
+            grid-area: footer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                grid-template-areas: "nav" "sidebar" "main" "content1" "content2" "content3" "footer";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto
+            }
+        }
+        
+        .cards-main {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: khaki;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav>
+            nav
+        </nav>
+        <div class="sidebar">Sidebar</div>
+        <main>
+            <div class="cards-main">
+                <div class="content-bg">One</div>
+                <div class="content-bg">one1</div>
+                <div class="content-bg">two</div>
+                <div class="content-bg">Three</div>
+                <div class="content-bg">four</div>
+                <div class="content-bg">Five</div>
+            </div>
+        </main>
+        <div class="content1a">
+            CONTENT 1a
+        </div>
+        <div class="content1">
+            CONTENT 12
+        </div>
+        <div class="content2">Content 2</div>
+        <div class="content3">Content 3</div>
+        <footer>Footer</footer>
+    </div>
+</body>
+
+</html>
